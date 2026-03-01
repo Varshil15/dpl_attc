@@ -106,15 +106,46 @@ Attendance-Planner/
    - You should be redirected back after authentication
 
 ### Important Notes
-- ✅ The `supabase-config.js` file contains your credentials
-- ✅ Supabase Anon Key is safe to expose (protected by Row Level Security)
+- ✅ The `supabase-config.js` file is safe to deploy (contains public anon key)
+- ✅ Supabase Anon Key is designed for client-side use
+- ✅ Your data is protected by Row Level Security (RLS) on the database
 - ✅ Make sure RLS policies are enabled on your Supabase tables
-- ✅ The `.gitignore` file is configured to protect sensitive files
+- ⚠️ DO NOT commit any file containing Supabase Service Key (not used in this app)
 
 ### Custom Domain (Optional)
 - In Vercel project settings, go to "Domains"
 - Add your custom domain
 - Update Supabase Redirect URLs with your custom domain
+
+## 🐛 Troubleshooting Google Sign-In
+
+If the "Sign in with Google" button doesn't work after deployment:
+
+1. **Open Browser Console** (Press F12, go to Console tab)
+2. **Check for these logs:**
+   - ✅ `Supabase client initialized` - Means Supabase loaded correctly
+   - ✅ `🔵 Sign in button clicked` - Means button is working
+   - ❌ If you don't see these, the scripts didn't load
+
+3. **Most Common Issues:**
+   - **Redirect URL not configured in Supabase**
+     - Go to Supabase → Authentication → URL Configuration
+     - Add your Vercel URL (e.g., `https://your-app.vercel.app`)
+     - Include both with and without trailing slash
+   
+   - **Google OAuth not enabled**
+     - Go to Supabase → Authentication → Providers
+     - Enable Google provider and save
+   
+   - **Scripts not deployed**
+     - Check Vercel deployment logs
+     - Verify `supabase-config.js` is in your repository
+
+4. **Test Locally First:**
+   ```bash
+   # Open with Live Server or similar
+   # Check console for any errors
+   ```
 
 ## 💻 Technologies Used
 

@@ -1,5 +1,6 @@
-# Supabase configuration with credentials
-supabase-config.js
+# Supabase config - COMMENTED OUT because anon key is safe for client-side
+# The anon key is protected by Row Level Security (RLS)
+# supabase-config.js
 
 # Node modules (if any)
 node_modules/
