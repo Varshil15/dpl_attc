@@ -19,6 +19,7 @@ console.log('✅ Supabase client initialized:', {
 // Auth Functions
 // ============================================
 
+// Google OAuth Sign In
 async function signInWithGoogle() {
     try {
         console.log('🔵 Sign in button clicked');
@@ -83,8 +84,12 @@ async function upsertUserProfile(user) {
     const { error } = await supabaseClient.from('user_profiles').upsert({
         id: user.id,
         email: user.email,
-        full_name: user.user_metadata?.full_name || user.email,
+        full_name: user.user_metadata?.full_name || user.user_metadata?.username || user.email,
+        username: user.user_metadata?.username || user.email.split('@')[0],
         avatar_url: user.user_metadata?.avatar_url || '',
+        recovery_type: user.user_metadata?.recovery_type || 'email',
+        recovery_email: user.user_metadata?.recovery_email || user.email,
+        recovery_phone: user.user_metadata?.recovery_phone || '',
         updated_at: new Date().toISOString()
     }, { onConflict: 'id' });
 
